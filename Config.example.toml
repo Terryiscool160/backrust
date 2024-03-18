@@ -1,0 +1,23 @@
+[config]
+when = "0 0 * * *"
+
+[buckets]
+[buckets.bucket]
+application_id = ""
+application_key = ""
+bucket_id = ""
+
+[hosts]
+[hosts.server]
+db_host = ""
+db_port = 3306
+db_username = ""
+db_password = ""
+
+[databases]
+[databases.database]
+db_name = ""
+db_host = ""
+bucket = ""
+remote_path = ""
+databases = ""

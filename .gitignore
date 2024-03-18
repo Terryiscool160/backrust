@@ -1,0 +1,5 @@
+/target
+/backups
+/tmp
+Config.toml
+.env
