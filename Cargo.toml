@@ -11,5 +11,5 @@ chrono = "0.4.35"
 dotenv = "0.15.0"
 serde = { version = "1.0.197", features = ["derive"] }
 tokio = "1.36.0"
-tokio-cron-scheduler = { version = "0.10.0", features = ["signal"] }
+# tokio-cron-scheduler = { version = "0.10.0", features = ["signal"] }
 toml = "0.8.11"

@@ -86,9 +86,22 @@ async fn main() {
             .output();
 
         match output {
-            Ok(_) => {
-                println!("Successfully exported database {}!", db);
-            }
+            Ok(output) => match output.status.success() {
+                true => {
+                    println!("Successfully exported database {}!", db);
+                }
+                false => {
+                    println!(
+                        "{}",
+                        Error::MariaDbDumpError(
+                            String::from_utf8_lossy(&output.stderr).to_string(),
+                            db.to_string()
+                        )
+                    );
+
+                    continue;
+                }
+            },
             Err(err) => {
                 println!(
                     "{}",

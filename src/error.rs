@@ -1,5 +1,5 @@
 use std::{fmt, io};
-use tokio_cron_scheduler::JobSchedulerError;
+// use tokio_cron_scheduler::JobSchedulerError;
 
 #[derive(Debug)]
 pub enum Error {
@@ -37,8 +37,8 @@ impl From<io::Error> for Error {
     }
 }
 
-impl From<JobSchedulerError> for Error {
-    fn from(error: JobSchedulerError) -> Self {
-        Error::SchedulerError(error.to_string())
-    }
-}
+// impl From<JobSchedulerError> for Error {
+//     fn from(error: JobSchedulerError) -> Self {
+//         Error::SchedulerError(error.to_string())
+//     }
+// }
