@@ -8,7 +8,7 @@ edition = "2021"
 [dependencies]
 b2_backblaze = "0.1.8"
 chrono = "0.4.35"
-dotenv = "0.15.0"
+# dotenv = "0.15.0"
 serde = { version = "1.0.197", features = ["derive"] }
 tokio = "1.36.0"
 # tokio-cron-scheduler = { version = "0.10.0", features = ["signal"] }
