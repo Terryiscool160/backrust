@@ -1,6 +1,6 @@
 [package]
 name = "backup"
-description = "An automated backup tool to dump MariaDB databases and uploa them to a Backblaze S3 bucket"
+description = "An automated backup tool to dump MariaDB databases and upload them to a Backblaze S3 bucket"
 version = "0.1.0"
 edition = "2021"
 
