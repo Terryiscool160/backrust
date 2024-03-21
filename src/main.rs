@@ -5,10 +5,24 @@ mod error;
 use error::Error;
 use std::fs;
 use std::process::Command;
+use clap::Parser;
+
+#[derive(clap::Parser)]
+#[command(about, long_about = None)]
+struct Arg {
+    #[arg(short = 'c', long = "config")]
+    config_file: Option<String>,
+}
 
 #[tokio::main]
 async fn main() {
-    let config = match config::read_config() {
+    let config_file = Arg::parse();
+    let config_path = config_file.config_file.unwrap_or_else(|| {
+        println!("Using default config location: ./Config.toml");
+        String::from("./Config.toml")
+    });
+    
+    let config = match config::read_config(config_path) {
         Ok(config) => config,
         Err(err) => {
             println!("{}", err);
