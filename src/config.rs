@@ -68,8 +68,8 @@ impl From<toml::de::Error> for Error {
     }
 }
 
-pub fn read_config() -> Result<Config, Error> {
-    let file_output = fs::read_to_string("./Config.toml")?;
+pub fn read_config(path: String) -> Result<Config, Error> {
+    let file_output = fs::read_to_string(path)?;
     let config: Config = toml::from_str(&file_output)?;
 
     Ok(config)

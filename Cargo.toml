@@ -1,5 +1,6 @@
 [package]
 name = "backup"
+description = "An automated backup tool to dump MariaDB databases and uploa them to a Backblaze S3 bucket"
 version = "0.1.0"
 edition = "2021"
 
@@ -8,6 +9,7 @@ edition = "2021"
 [dependencies]
 b2_backblaze = "0.1.8"
 chrono = "0.4.35"
+clap = { version = "4.5.3", features = ["derive"] }
 # dotenv = "0.15.0"
 serde = { version = "1.0.197", features = ["derive"] }
 tokio = "1.36.0"
