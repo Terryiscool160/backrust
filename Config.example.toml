@@ -1,5 +1,5 @@
 [config]
-when = "0 0 * * *"
+backup_interval = 1
 
 [buckets]
 [buckets.bucket]

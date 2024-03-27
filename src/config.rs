@@ -29,7 +29,7 @@ pub struct BackupConfig {
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct MiscConfig {
-    pub when: String,
+    pub backup_interval: u64,
 }
 
 #[derive(Debug, Deserialize, Clone)]

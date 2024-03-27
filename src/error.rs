@@ -8,7 +8,6 @@ pub enum Error {
     BackblazeLoginError(String),
     MariaDbDumpError(String, String),
     DatabaseCompressionError(String, String),
-    SchedulerError(String),
     IoError(String),
 }
 
@@ -24,8 +23,7 @@ impl fmt::Display for Error {
             Error::BackblazeLoginError(err) => format!("An error occured while logging into backblaze, did you set the right details?\nError: {err}"),
             Error::MariaDbDumpError(err, db_name) => format!("It seems mariadb-dump exited with an error for the backup of database {db_name}, this backup will not complete\nError: {err}"),
             Error::IoError(err) => format!("An error occured while modifying a file/folder: {err}"),
-            Error::DatabaseCompressionError(err, db_name) => format!("An error occured while compressing the backup of database {db_name}, this backup will not complete\nError: {err}"),
-            Error::SchedulerError(err) => format!("An error occured while scheduling a backup job: {err}"),
+            Error::DatabaseCompressionError(err, db_name) => format!("An error occured while compressing the backup of database {db_name}, this backup will not complete\nError: {err}")
         };
         write!(f, "{}", str)
     }
