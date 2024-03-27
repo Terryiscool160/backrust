@@ -4,8 +4,8 @@ mod config;
 mod error;
 use clap::Parser;
 use error::Error;
+use std::fs;
 use std::process::Command;
-use std::{fmt::format, fs};
 use tokio::time::{sleep, Duration};
 
 #[derive(clap::Parser)]
