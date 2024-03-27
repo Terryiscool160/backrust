@@ -62,7 +62,10 @@ async fn main() {
             let Some(backup_host) = config.hosts.get(&backup_config.db_host) else {
                 println!(
                     "{}",
-                    Error::BackupHostConfigError(backup_config.db_host.clone(), db.to_string())
+                    Error::BackupHostConfigError(
+                        backup_config.db_host.clone(),
+                        backup_config.db_name.to_string()
+                    )
                 );
 
                 continue;
@@ -71,7 +74,10 @@ async fn main() {
             let Some(backblaze_config) = config.buckets.get(&backup_config.bucket) else {
                 println!(
                     "{}",
-                    Error::BucketConfigError(backup_config.bucket.clone(), db.to_string())
+                    Error::BucketConfigError(
+                        backup_config.bucket.clone(),
+                        backup_config.db_name.to_string()
+                    )
                 );
 
                 continue;
@@ -100,20 +106,23 @@ async fn main() {
                 .arg(format!("--user={}", backup_host.db_username))
                 .arg(format!("--password={}", backup_host.db_password))
                 .args([databases_argument, databases])
-                .arg(format!("--result-file=./tmp/{}.sql", &db))
+                .arg(format!(
+                    "--result-file=./tmp/{}.sql",
+                    &backup_config.db_name
+                ))
                 .output();
 
             match output {
                 Ok(output) => match output.status.success() {
                     true => {
-                        println!("Successfully exported database {}!", db);
+                        println!("Successfully exported database {}!", backup_config.db_name);
                     }
                     false => {
                         println!(
                             "{}",
                             Error::MariaDbDumpError(
                                 String::from_utf8_lossy(&output.stderr).to_string(),
-                                db.to_string()
+                                backup_config.db_name.to_string()
                             )
                         );
 
@@ -123,7 +132,7 @@ async fn main() {
                 Err(err) => {
                     println!(
                         "{}",
-                        Error::MariaDbDumpError(err.to_string(), db.to_string())
+                        Error::MariaDbDumpError(err.to_string(), backup_config.db_name.to_string())
                     );
 
                     continue;
@@ -138,19 +147,25 @@ async fn main() {
 
             match result {
                 Ok(_) => {
-                    println!("Successfully compressed database {}!", db);
+                    println!(
+                        "Successfully compressed database {}!",
+                        backup_config.db_name
+                    );
                 }
                 Err(err) => {
                     println!(
                         "{}",
-                        Error::DatabaseCompressionError(err.to_string(), db.to_string())
+                        Error::DatabaseCompressionError(
+                            err.to_string(),
+                            backup_config.db_name.to_string()
+                        )
                     );
 
                     continue;
                 }
             }
 
-            fs::remove_file(format!("./tmp/{}.sql", &db))
+            fs::remove_file(format!("./tmp/{}.sql", &backup_config.db_name))
                 .unwrap_or_else(|err| println!("{}", Error::IoError(err.to_string())));
 
             let client = b2_backblaze::B2::new(b2_backblaze::Config::new(
@@ -182,7 +197,7 @@ async fn main() {
                 Ok(_) => {
                     println!(
                         "Successfully uploaded database {} at {}!",
-                        db, upload_location,
+                        backup_config.db_name, upload_location,
                     );
                 }
                 Err(err) => {
