@@ -4,8 +4,8 @@ mod config;
 mod error;
 use clap::Parser;
 use error::Error;
-use std::fs;
 use std::process::Command;
+use std::{fmt::format, fs};
 use tokio::time::{sleep, Duration};
 
 #[derive(clap::Parser)]
@@ -90,7 +90,7 @@ async fn main() {
             };
 
             println!(
-                "Exporting databases {} from {}",
+                "Exporting database(s) {} from {}",
                 &databases, &backup_host.db_host
             );
 
@@ -150,6 +150,9 @@ async fn main() {
                 }
             }
 
+            fs::remove_file(format!("./tmp/{}.sql", &db))
+                .unwrap_or_else(|err| println!("{}", Error::IoError(err.to_string())));
+
             let client = b2_backblaze::B2::new(b2_backblaze::Config::new(
                 backblaze_config.application_id.clone(),
                 backblaze_config.application_key.clone(),
@@ -192,7 +195,7 @@ async fn main() {
             .unwrap_or_else(|err| println!("{}", Error::IoError(err.to_string())));
 
         println!(
-            "Backups completed! Sleeping for {} minutes.",
+            "Backups completed! Sleeping for {} minutes",
             backup_interval.as_secs() / 60
         );
 
