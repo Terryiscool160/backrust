@@ -1,0 +1,16 @@
+[Unit]
+Description=Backup Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/home/rust/backrust/target/release
+WorkingDirectory=/home/rust/backrust/
+Restart=on-failure
+PrivateTmp=true
+User=rust
+Group=rust
+
+[Install]
+WantedBy=multi-user.target
