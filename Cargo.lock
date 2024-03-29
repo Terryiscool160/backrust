@@ -102,6 +102,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "backrust"
+version = "0.1.0"
+dependencies = [
+ "b2_backblaze",
+ "chrono",
+ "clap",
+ "serde",
+ "tokio",
+ "toml",
+]
+
+[[package]]
 name = "backtrace"
 version = "0.3.69"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -114,18 +126,6 @@ dependencies = [
  "miniz_oxide",
  "object",
  "rustc-demangle",
-]
-
-[[package]]
-name = "backup"
-version = "0.1.0"
-dependencies = [
- "b2_backblaze",
- "chrono",
- "clap",
- "serde",
- "tokio",
- "toml",
 ]
 
 [[package]]

@@ -5,7 +5,7 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/home/rust/backrust/target/release
+ExecStart=/home/rust/backrust/target/release/backrust
 WorkingDirectory=/home/rust/backrust/
 Restart=on-failure
 PrivateTmp=true
